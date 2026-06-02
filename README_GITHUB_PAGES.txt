@@ -1,16 +1,4 @@
-Ocean Fast Ferries V33 VERIFIED REPAIR Unified Command
+OceanJet Baggage Pro V47 Stability + Efficiency
 
-Upload the CONTENTS of this folder to GitHub Pages, not the ZIP itself.
-Required homepage file: index.html
-
-This build was repaired from the last verified syntax-clean base: V30 Service SuperApp OS.
-It adds:
-- V31-style Smart Offline AI
-- V32-style Field Intelligence Intake
-- V33 Unified Command Hub
-- Passenger Kiosk
-- Staff Workbench
-- V33 Live Map Intelligence Lens
-- Data Guardian
-
-No OpenAI API key is used. Works as a static GitHub Pages app.
+Upload all files in this ZIP to the root of your GitHub Pages repository.
+V47 improves code stability, mobile safety, storage efficiency, evidence capture, and paired batch upload organization while preserving calculator, pricing, staff, admin, PDF, and AR/manual evidence workflows.

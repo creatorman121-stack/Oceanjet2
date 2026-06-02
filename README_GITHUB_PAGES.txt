@@ -1,13 +1,16 @@
-OceanJet Baggage Pro V35 - GitHub Pages Package
+Ocean Fast Ferries V33 VERIFIED REPAIR Unified Command
 
-Upload all files in this ZIP to your GitHub Pages repository root.
-Open index.html through GitHub Pages.
+Upload the CONTENTS of this folder to GitHub Pages, not the ZIP itself.
+Required homepage file: index.html
 
-V35 updates:
-- Default visitor is Passenger mode with no login required.
-- Passenger can only see passenger/public tools.
-- Cashier Login unlocks counter tools only.
-- Admin Login unlocks all tools.
-- Receipts, transactions, claims, damage logs, and system audit reports export as professional PDF.
-- JSON backup is kept only as technical recovery backup.
-- Original baggage calculator logic and existing V33 features are preserved.
+This build was repaired from the last verified syntax-clean base: V30 Service SuperApp OS.
+It adds:
+- V31-style Smart Offline AI
+- V32-style Field Intelligence Intake
+- V33 Unified Command Hub
+- Passenger Kiosk
+- Staff Workbench
+- V33 Live Map Intelligence Lens
+- Data Guardian
+
+No OpenAI API key is used. Works as a static GitHub Pages app.

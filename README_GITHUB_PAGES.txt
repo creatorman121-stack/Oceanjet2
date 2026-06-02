@@ -1,4 +1,5 @@
-OceanJet Baggage Pro V47 Stability + Efficiency
+OceanJet Baggage Pro V50 Role Organized
 
-Upload all files in this ZIP to the root of your GitHub Pages repository.
-V47 improves code stability, mobile safety, storage efficiency, evidence capture, and paired batch upload organization while preserving calculator, pricing, staff, admin, PDF, and AR/manual evidence workflows.
+Source: repaired V47 fixed package.
+Existing code preserved. V50 adds clean role-based tabs/workspaces for Passenger, Cashier, and Admin.
+Upload all files to GitHub Pages root. Open index.html.

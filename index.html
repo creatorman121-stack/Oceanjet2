@@ -6318,5 +6318,68 @@ body.oj45-ready .app{max-width:1200px;margin:0 auto;min-height:100dvh;padding:0 
 })();
 </script>
 
+
+<!-- OceanJet V48 Role Tab Organizer Patch: preserves all previous code, only reorganizes access/navigation. -->
+<style id="oj48RoleOrganizerStyle">
+  .oj48-section{margin:12px 10px 6px;padding:6px 10px;border-radius:999px;background:rgba(148,163,184,.10);color:var(--text3,#94a3b8);font-size:.68rem;font-weight:900;letter-spacing:.08em;text-transform:uppercase;border:1px solid rgba(148,163,184,.16)}
+  .drawer-item.oj48-menu{display:flex;align-items:center;gap:10px;line-height:1.15}.drawer-item.oj48-menu span{display:flex;flex-direction:column}.drawer-item.oj48-menu small{font-size:.68rem;color:var(--text3,#94a3b8);font-weight:600;margin-top:2px}.oj48-role-pill{display:inline-flex;gap:6px;align-items:center;border:1px solid rgba(45,212,191,.35);border-radius:999px;padding:6px 10px;font-weight:900;font-size:.74rem;background:rgba(45,212,191,.10)}
+  .oj48-hero{position:relative;overflow:hidden;border:1px solid rgba(45,212,191,.25);background:linear-gradient(135deg,rgba(14,165,233,.16),rgba(236,72,153,.12));border-radius:22px;padding:18px}.oj48-title{display:flex;justify-content:space-between;gap:12px;align-items:flex-start;flex-wrap:wrap}.oj48-title h2{margin:0 0 6px}.oj48-sub{color:var(--text3,#94a3b8);font-size:.9rem;line-height:1.45}.oj48-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(165px,1fr));gap:10px}.oj48-card{padding:14px;border-radius:18px;background:rgba(15,23,42,.52);border:1px solid rgba(148,163,184,.18);cursor:pointer;transition:.18s}.oj48-card:hover{transform:translateY(-2px);border-color:rgba(45,212,191,.55)}.oj48-card b{display:block;margin:6px 0 4px}.oj48-card small{color:var(--text3,#94a3b8);line-height:1.35}.oj48-ico{font-size:1.35rem}.oj48-note{margin-top:10px;padding:10px 12px;border-radius:14px;background:rgba(34,197,94,.10);border:1px solid rgba(34,197,94,.24);color:var(--text2,#cbd5e1)}
+  #v11Dock.oj48-dock{gap:6px;padding:6px;border:1px solid rgba(45,212,191,.25);backdrop-filter:blur(12px)}#v11Dock.oj48-dock button{white-space:nowrap}
+</style>
+<script id="oj48RoleOrganizerScript">
+(function(){
+  'use strict';
+  if(window.__oj48RoleOrganizer) return; window.__oj48RoleOrganizer=true;
+  const VERSION='OceanJet V48 Role Tab Organizer';
+  const ROLE_KEY='oj_v35_active_role';
+  const $=id=>document.getElementById(id);
+  const qsa=s=>Array.from(document.querySelectorAll(s));
+  const app=()=>document.querySelector('.app')||document.body;
+  const esc=s=>String(s==null?'':s).replace(/[&<>\"]/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[m]));
+  function getRole(){try{if(typeof currentRole!=='undefined'){if(currentRole==='supervisor')return'admin';if(currentRole==='cashier')return'cashier';}}catch(e){}try{return sessionStorage.getItem(ROLE_KEY)||'pax'}catch(e){return'pax'}}
+  function roleLabel(){const r=getRole();return r==='admin'?'👑 Admin':r==='cashier'?'💼 Cashier':'👤 Passenger'}
+  function toast48(msg){try{if(typeof toast==='function')toast(msg);else console.log(msg)}catch(e){console.log(msg)}}
+  function ensureView(name){let v=$('view-'+name);if(!v){v=document.createElement('div');v.id='view-'+name;v.className='view';app().appendChild(v)}return v}
+  const GROUPS={
+    pax:[
+      ['Passenger Tools',[['v48-home','🏠','Passenger Home','Public start page'],['calculator','🧮','Baggage Fee','Check baggage charge'],['fares','💵','Fares','View passenger fares'],['schedules','🕐','Schedules','Route departures'],['damage','📷','Damage Report','Photo evidence / report'],['lostbaggage','🧳','Lost/Damaged Form','Create passenger claim'],['claimstatus','🔎','Claim Status','Track claim request']]],
+      ['Staff Access',[['v35-cashier-login','💼','Cashier Login','Counter tools'],['v35-admin-login','🔐','Admin Login','Full control']]]
+    ],
+    cashier:[
+      ['Cashier Counter',[['v48-home','🏠','Cashier Home','Counter dashboard'],['calculator','🧮','Baggage Calculator','Fees and receipts'],['history','📋','Transactions','Saved baggage records'],['v35-reports','📄','PDF Reports','Receipts / summaries']]],
+      ['Claim Processing',[['damage','📷','Evidence Studio','Manual + batch photos'],['lostbaggage','🧳','Claim Intake','Passenger claim form'],['claimstatus','🔎','Claim Status','Search/verify claims'],['staffcounter','👥','Staff Counter','Review passenger requests'],['v32-field','🧾','Field Intake','Quick counter form'],['v30-claim','🧳','Claim Studio','Prepare claim packet']]],
+      ['Reference',[['fares','💵','Fares','Fare matrix'],['schedules','🕐','Schedules','Route departures'],['v35-admin-login','🔐','Admin Login','Unlock full access']]],
+      ['Lock',[['v48-lock','🚪','Return Passenger','Hide staff tools']]]
+    ],
+    admin:[
+      ['Passenger + Cashier',[['v48-home','🏠','Admin Home','Role command center'],['calculator','🧮','Baggage Calc','Fee tool'],['damage','📷','Evidence Studio','Damage/photo workflow'],['lostbaggage','🧳','Claim Intake','Passenger claim form'],['claimstatus','🔎','Claim Status','Claim search'],['staffcounter','👥','Staff Counter','Request triage'],['history','📋','History','Transactions/logs'],['v35-reports','📄','PDF Center','Reports / receipts']]],
+      ['Operations',[['dashboard','📊','Dashboard','System overview'],['fares','💵','Fares','Fare management'],['schedules','🕐','Schedules','Schedule board'],['map','🗺️','Live Map','Route map'],['command','🛰️','Command Center','Operations view'],['v33-command','🧭','V33 Command','Search launcher']]],
+      ['Admin + Data',[['admin','⚙️','Admin Panel','Settings / pricing'],['exportcenter','📤','Export Center','Backups / exports'],['sitehealth','🛟','Stability Center','Health / optimizer'],['v33-data','🛡️','Data Guardian','Storage audit'],['contentmanager','📝','Content Manager','Notices/content']]],
+      ['Advanced Modules',[['v33-staff','🎒','Staff Workbench','Staff tools'],['v30-os','🚢','Service OS','Service modules'],['v30-admin','🛠️','V30 Admin','Legacy admin'],['v31-ai','🤖','Offline AI','SOP helper'],['v27-guardian','🛡️','Guardian','Legacy guard'],['v29-admin','🛠️','V29 Admin','Legacy admin']]],
+      ['Lock',[['v48-lock','🚪','Return Passenger','Hide protected tools']]]
+    ]
+  };
+  const always=new Set(['v48-home','v35-cashier-login','v35-admin-login','v48-lock']);
+  const paxAllowed=new Set(GROUPS.pax.flatMap(g=>g[1].map(x=>x[0])).concat(['portal','v33-passenger','v30-care','ar']));
+  const cashierAllowed=new Set([...paxAllowed,...GROUPS.cashier.flatMap(g=>g[1].map(x=>x[0])), 'ar','v33-staff','v30-care','v30-sync']);
+  const alias={calc:'calculator',scanner:'damage',camera:'damage',evidence:'damage','evidence-studio':'damage',optimizer:'sitehealth','health-v47':'sitehealth'};
+  function canOpen(name){name=alias[name]||name;if(always.has(name))return true;const r=getRole();if(r==='admin')return true;if(r==='cashier')return cashierAllowed.has(name);return paxAllowed.has(name)}
+  function rowsForRole(){return GROUPS[getRole()]||GROUPS.pax}
+  function activate(name){qsa('.view').forEach(v=>v.classList.remove('active'));ensureView(name).classList.add('active');qsa('#drawerMenu .drawer-item').forEach(el=>el.classList.toggle('active',el.dataset.view===name));try{window.scrollTo({top:0,behavior:'smooth'})}catch(e){window.scrollTo(0,0)}}
+  function openAction(view){if(view==='v48-lock'){try{if(typeof window.oj35Logout==='function')return window.oj35Logout()}catch(e){}try{sessionStorage.setItem(ROLE_KEY,'pax');currentRole=null}catch(e){}buildDrawerMenu();return showView('v48-home')}return showView(view)}
+  window.oj48Open=openAction;
+  window.buildDrawerMenu=function(){const menu=$('drawerMenu');if(!menu)return;let html='';rowsForRole().forEach(group=>{html+='<div class="oj48-section">'+esc(group[0])+'</div>';group[1].forEach(i=>{html+='<div class="drawer-item oj48-menu" data-view="'+esc(i[0])+'" onclick="oj48Open(\''+esc(i[0])+'\')"><i>'+i[1]+'</i><span><b>'+esc(i[2])+'</b><small>'+esc(i[3])+'</small></span></div>'})});menu.innerHTML=html;const dl=document.querySelector('.drawer-logout');if(dl){dl.textContent=getRole()==='pax'?'Passenger Mode':'🚪 Return Passenger';dl.onclick=function(){openAction('v48-lock')}};ensureDock()};
+  function card(ico,title,sub,view){return '<div class="oj48-card" onclick="oj48Open(\''+esc(view)+'\')"><span class="oj48-ico">'+ico+'</span><b>'+esc(title)+'</b><small>'+esc(sub)+'</small></div>'}
+  function renderHome(){const r=getRole();const v=ensureView('v48-home');const groups=rowsForRole().filter(g=>g[0]!=='Lock');let intro=r==='admin'?'Admin sees everything, but tabs are grouped so operations, cashier work, and system tools are no longer mixed together.':r==='cashier'?'Cashier sees counter and claim-processing tools only. Admin settings and system tools stay hidden.':'Passenger sees only public tools plus staff login buttons. Cashier/admin tools are hidden by default.';v.innerHTML='<div class="card oj48-hero"><div class="oj48-title"><div><h2>'+roleLabel()+' Workspace</h2><div class="oj48-sub">'+esc(intro)+'</div></div><span class="oj48-role-pill">V48 Organized Tabs</span></div><div class="oj48-note">Existing code is preserved. This update only reorganizes navigation and protects tabs by role.</div></div>'+groups.map(g=>'<div class="card"><div class="card-header">'+esc(g[0])+'</div><div class="oj48-grid">'+g[1].map(x=>card(x[1],x[2],x[3],x[0])).join('')+'</div></div>').join('')}
+  function ensureDock(){let dock=$('v11Dock');if(!dock){dock=document.createElement('div');dock.id='v11Dock';document.body.appendChild(dock)}dock.classList.add('oj48-dock');const r=getRole();const items=r==='admin'?[['v48-home','🏠 Home'],['damage','📷 Evidence'],['admin','⚙️ Admin'],['sitehealth','🛟 Health']]:r==='cashier'?[['v48-home','🏠 Home'],['calculator','🧮 Calc'],['damage','📷 Evidence'],['history','📋 History']]:[['v48-home','🏠 Home'],['calculator','🧮 Fee'],['fares','💵 Fares'],['claimstatus','🔎 Claim']];dock.innerHTML=items.map(i=>'<button onclick="oj48Open(\''+i[0]+'\')">'+i[1]+'</button>').join('')}
+  const previousShow=window.showView;
+  window.showView=function(name){name=String(name||'v48-home').replace(/^view-/,'');const target=alias[name]||name;if(target==='v48-home'){activate('v48-home');renderHome();return}if(target==='v48-lock')return openAction('v48-lock');if(!canOpen(target)){toast48('This tab is hidden for '+roleLabel()+'.');activate('v48-home');renderHome();return}if(typeof previousShow==='function'&&previousShow!==window.showView){return previousShow.call(this,target)}activate(target)};
+  try{showView=window.showView}catch(e){}
+  window.navigate=function(name){try{closeDrawer&&closeDrawer()}catch(e){}return window.showView(name)};try{navigate=window.navigate}catch(e){}
+  function boot(){try{document.title='OceanJet Baggage Pro V48 Role Organized';document.body.classList.add('oj48-ready');buildDrawerMenu();ensureDock();setTimeout(buildDrawerMenu,500);setTimeout(buildDrawerMenu,1800);const active=document.querySelector('.view.active');if(!active||active.id==='view-dashboard'||active.id==='view-home'){window.showView('v48-home')}console.log(VERSION+' loaded')}catch(e){console.error('V48 organizer failed',e)}}
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',boot,{once:true});else boot();
+})();
+</script>
+
 </body>
 </html>
